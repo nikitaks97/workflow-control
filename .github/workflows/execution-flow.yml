@@ -35,7 +35,6 @@ jobs:
       - name: Test code
         id: run-test
         run: npm run test
-      
       - name: Upload test report
         if : steps.run-tests.otcome == 'failure'
         uses: actions/upload-artifact@v3
