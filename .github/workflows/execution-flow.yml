@@ -37,6 +37,11 @@ jobs:
         run: npm run test
       - name: Upload test report
         if : failure() && steps.run-test.outcome == 'failure'
+#  if : failure() && steps.run-test.outcome == 'failure' here failure() returns true when previous step or job failed and steps.run-test.outcome
+# this condition makes sure that the test job even if it is failing but the test reports will still get uploaded for the previous step.
+# So by using if condiiton here we can make a job run even if the previous step is failing.
+
+        
         uses: actions/upload-artifact@v4
         with:
           name: test reports
