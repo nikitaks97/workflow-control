@@ -1,26 +1,26 @@
 name: reusable workflow
+
 on: 
- workflow_call:
-  inputs:                          
-  # define any inputs this resuable workflow needs
-      artifact-name: 
-      description: the name of the deployable artifacts
-      required: false # required if set to true means this workflow needs the input value to run
-   # else it will fail
-   # and if required is false means workflow will run even if we are not getting the input.
-      default: dist # the name of the artifact that we will use if we don't get the artifact name
-      type: string # type of value we expect here
+  workflow_call:
+
+   inputs:                      
+     artifact-name: 
+       description: "The name of the deployable artifacts"
+       required: false  # If true, this workflow needs the input value to run; otherwise, it will fail.
+       default: dist    # The default artifact name if no input is provided.
+       type: string     # Expected type of the input value.
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: get code
+      - name: Get code
         uses: actions/download-artifact@v4
         with:
-          name: ${{ inputs.artifact-name }}
-          # gives the value for the above defined input.
-      - name: list files
+          name: ${{ inputs.artifact-name }} # Uses the input value for artifact name.
+
+      - name: List files
         run: ls
-      - name: output info
-        run: echo " deploying"
- 
+
+      - name: Output info
+        run: echo "Deploying"
