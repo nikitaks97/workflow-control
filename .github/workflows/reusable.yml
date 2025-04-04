@@ -3,13 +3,21 @@ name: reusable workflow
 on: 
   workflow_call:
 
-   inputs:                    # pass inputs to this resusable workflow.  
+   inputs:                    # pass inputs to this resusable workflow.
+   #This declares inputs for the reusable workflow.
+   #Any workflow that calls this reusable workflow can provide these inputs.
      artifact-name: 
        description: "The name of the deployable artifacts"
-       required: false  # If true, this workflow needs the input value to run; otherwise, it will fail.
+       required: false  # Controls whether this input is mandatory:
+#true → The workflow must receive a value, or it will fail.
+#false → The workflow can run without this input (it will use a default if not provided).
        default: dist    # The default artifact name if no input is provided.
+#Sets a default value (dist) if no input is provided.
+#If the calling workflow doesn’t specify artifact-name, it automatically assumes "dist".
        type: string     # Expected type of the input value.
-   secrets:                 #  
+       #Specifies the data type expected for this input.
+      # In this case, it should be a string (text value).
+   secrets:                  
     some-secret: 
       required: false 
 jobs:
