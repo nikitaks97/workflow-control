@@ -3,13 +3,15 @@ name: reusable workflow
 on: 
   workflow_call:
 
-   inputs:                      
+   inputs:                    # pass inputs to this resusable workflow.  
      artifact-name: 
        description: "The name of the deployable artifacts"
        required: false  # If true, this workflow needs the input value to run; otherwise, it will fail.
        default: dist    # The default artifact name if no input is provided.
        type: string     # Expected type of the input value.
-
+   secrets:                 #  
+    some-secret: 
+      required: false 
 jobs:
   deploy:
     runs-on: ubuntu-latest
