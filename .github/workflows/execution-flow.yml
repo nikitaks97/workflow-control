@@ -39,8 +39,8 @@ jobs:
         if : steps.run-tests.otcome == 'failure'
         uses: actions/upload-artifact@v3
         with:
-          name: test-report
-          path: test.json
+          name: test reports
+          path: .
   build:
     needs: test
     runs-on: ubuntu-latest
