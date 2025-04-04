@@ -1,1 +1,99 @@
+name: using reusable workflow
+on:
+  push:
+    branches:
+      - main
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v4
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: .
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependencies
+        if : steps.cache.outputs.cache-hit != 'true' # if the output of cache action is not true then only npm ci will run else not.
+        run: npm ci
+      - name: Lint code
+        run: npm run lint
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v4
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: .
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit !='true'
+        run: npm ci
+      - name: Test code
+        continue-on-error: true
+        id: run-test
+        run:
+         npm cache clean --force
+         && npm install
+         && npm run test
+      - name: Upload test report
+        if : failure() && steps.run-test.outcome == 'failure'
+#  if : failure() && steps.run-test.outcome == 'failure' here failure() returns true when previous step or job failed and steps.run-test.outcome
+# this condition makes sure that the test job even if it is failing but the test reports will still get uploaded for the previous step.
+# So by using if condiiton here we can make a job run even if the previous step is failing.
 
+        
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: test
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v4
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: .
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+      - name: Build website
+        id: build-website
+        run: npm run build
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-files
+          path: dist
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-files
+      - name: Output contents
+        run: ls
+      - name: Deploy
+        run: echo "Deploying..."
+  report:
+    needs: [lint, deploy]
+    if: failure()
+    runs-on : ubuntu-latest
+    steps:
+       - name: Information output
+         run: |
+            echo "This is a report job"
+            echo "Something went wrong"
+            echo "${{ toJSON(github) }}"
