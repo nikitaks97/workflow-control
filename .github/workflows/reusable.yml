@@ -28,6 +28,8 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: ${{ inputs.artifact-name }} # Uses the input value for artifact name.
+          #This dynamically assigns the value of artifact-name input to the name field.
+       #The ${{ inputs.artifact-name }} is a GitHub Actions expression, which pulls the value of the input provided to the workflow.
 
       - name: List files
         run: ls
