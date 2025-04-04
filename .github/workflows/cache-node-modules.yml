@@ -36,9 +36,9 @@ jobs:
         run: npm ci
       - name: Test code
         id: run-test
-        run:
-         npm cache clean --force
-         npm install
+        run: |
+         #npm cache clean --force
+         #npm install
          npm run test
       - name: Upload test report
         if : failure() && steps.run-test.outcome == 'failure'
