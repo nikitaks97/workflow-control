@@ -36,7 +36,10 @@ jobs:
         run: npm ci
       - name: Test code
         id: run-test
-        run: npm run test
+        run:
+         npm cache clean --force
+         npm install
+         npm run test
       - name: Upload test report
         if : failure() && steps.run-test.outcome == 'failure'
 #  if : failure() && steps.run-test.outcome == 'failure' here failure() returns true when previous step or job failed and steps.run-test.outcome
