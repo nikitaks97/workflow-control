@@ -80,7 +80,9 @@ jobs:
     uses: ./.github/workflows/reusable.yml         # this job is using the reusable workflow yml file 
     with: 
       artifact-name: dist-files       # pass the name of the artifact 
-       
+    # artifact-name: dist-files means:
+    #The deploy job will pass "dist-files" as the value for artifact-name input.
+    #In reusable.yml, this value will be available as ${{ inputs.artifact-name }}   
   report:
     needs: [lint, deploy]
     if: failure()
