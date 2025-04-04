@@ -46,8 +46,8 @@ jobs:
         
         uses: actions/upload-artifact@v4
         with:
-          name: test reports
-          path: .
+          name: test-reports
+          path: test
   build:
     needs: test
     runs-on: ubuntu-latest
