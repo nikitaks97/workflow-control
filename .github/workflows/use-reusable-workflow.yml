@@ -79,7 +79,7 @@ jobs:
     needs: build
     uses: ./.github/workflows/reusable.yml         # this job is using the reusable workflow yml file 
     with: 
-      artifact-name: dist-files
+      artifact-name: dist-files       # pass the name of the artifact 
        
   report:
     needs: [lint, deploy]
