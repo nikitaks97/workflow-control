@@ -82,7 +82,10 @@ jobs:
       artifact-name: dist-files       # pass the name of the artifact 
     # artifact-name: dist-files means:
     #The deploy job will pass "dist-files" as the value for artifact-name input.
-    #In reusable.yml, this value will be available as ${{ inputs.artifact-name }}   
+    #In reusable.yml, this value will be available as ${{ inputs.artifact-name }}     
+    # Build Job Runs → Generates the dist-files artifact.#Deploy Job Waits for Build to Finish (needs: build).
+    #Deploy Job Calls reusable.yml and Passes artifact-name: dist-files.
+    #Reusable Workflow (reusable.yml) Executes Using dist-files Artifact.
   report:
     needs: [lint, deploy]
     if: failure()
