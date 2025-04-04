@@ -77,7 +77,10 @@ jobs:
           path: dist
   deploy:
     needs: build
-    uses: ./.github/workflows/reusable.yml # this job is using the reusable workflow yml file 
+    uses: ./.github/workflows/reusable.yml         # this job is using the reusable workflow yml file 
+    with: 
+      artifact-name: dist-files
+       
   report:
     needs: [lint, deploy]
     if: failure()
