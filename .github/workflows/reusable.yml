@@ -17,13 +17,20 @@ on:
        type: string     # Expected type of the input value.
        #Specifies the data type expected for this input.
       # In this case, it should be a string (text value).
-   secrets:                  
-    some-secret: 
-      required: false 
+   outputs:
+    result: 
+      description: the result of the deployment operation.
+      value:
+   
+   # secrets:                  
+   # some-secret: 
+     # required: false 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
-    steps:
+   outputs: 
+    outcome: ${{ steps.set-result.outputs.step-result}}
+   runs-on: ubuntu-latest
+   steps:
       - name: Get code
         uses: actions/download-artifact@v4
         with:
@@ -36,3 +43,6 @@ jobs:
 
       - name: Output info
         run: echo "Deploying"
+      - name: set result output
+        id : set-result
+        run: echo " ::set-output=step-result::success"
