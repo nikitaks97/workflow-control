@@ -20,7 +20,7 @@ on:
    outputs:
     result: 
       description: the result of the deployment operation.
-      value:
+      value: ${{ jobs.deploy}}
    
    # secrets:                  
    # some-secret: 
