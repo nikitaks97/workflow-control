@@ -46,7 +46,11 @@ jobs:
 #  if : failure() && steps.run-test.outcome == 'failure' here failure() returns true when previous step or job failed and steps.run-test.outcome
 # this condition makes sure that the test job even if it is failing but the test reports will still get uploaded for the previous step.
 # So by using if condiiton here we can make a job run even if the previous step is failing.
-# In GitHub Actions, failure() is a built-in function that returns true if any previous step in the job has failed. It's often used to trigger specific steps like sending alerts or doing cleanup after a failure. Meanwhile, steps.run-test.outcome == 'failure' is a condition that checks whether the outcome of the step with ID run-test specifically ended in failure. So, when you combine them like this: if: failure() && steps.run-test.outcome == 'failure', it means "Run this step only if something in the job has already failed and specifically the step named run-test has failed." This gives you fine-grained control to respond to specific step failures within a job.
+# In GitHub Actions, failure() is a built-in function that returns true if any previous step in the job has failed.
+#It's often used to trigger specific steps like sending alerts or doing cleanup after a failure.
+# Meanwhile, steps.run-test.outcome == 'failure' is a condition that checks whether the outcome of the step w ith ID run-test specifically ended in failure.
+# So, when you combine them like this: if: failure() && steps.run-test.outcome == 'failure', it means 
+#"Run this step only if something in the job has already failed and specifically the step named run-test has failed." This gives you fine-grained control to respond to specific step failures within a job.
         
         uses: actions/upload-artifact@v4
         with:
