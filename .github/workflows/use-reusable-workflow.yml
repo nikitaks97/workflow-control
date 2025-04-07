@@ -97,6 +97,23 @@ jobs:
     - name: print deploy output
       run: echo "${{ needs.deploy.outputs.result }}"
    
+   #print-deploy-result:
+
+#This is the name of the job.
+#GitHub Actions uses job names to define and reference different stages of your workflow.
+#needs: deploy
+#This means this job depends on the deploy job.
+#It will only run after the deploy job has finished successfully.
+#runs-on: ubuntu-latest
+#Specifies the OS environment where this job runs.
+#In this case, it's the latest Ubuntu Linux runner provided by GitHub.
+#steps:
+#This section contains a list of actions or shell commands the job will perform.
+#Step - name: print deploy output
+#A descriptive name for the step.
+#run: echo "${{ needs.deploy.outputs.result }}"
+#This prints out the result output of the deploy job.
+#You can only use needs.deploy.outputs.result if the deploy job has defined that output explicitly.
   
    
     #secrets:
