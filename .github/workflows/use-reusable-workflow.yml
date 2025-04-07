@@ -94,8 +94,8 @@ jobs:
    needs: deploy
    runs-on: ubuntu-latest
    steps:
-     - name: print deploy output
-       run: echo "${{ needs.deploy.outputs.result }}"
+    - name: print deploy output
+      run: echo "${{ needs.deploy.outputs.result }}"
    
   
    
