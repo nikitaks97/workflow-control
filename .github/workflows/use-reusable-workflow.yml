@@ -90,8 +90,17 @@ jobs:
     # Build Job Runs → Generates the dist-files artifact.#Deploy Job Waits for Build to Finish (needs: build).
     #Deploy Job Calls reusable.yml and Passes artifact-name: dist-files.
     #Reusable Workflow (reusable.yml) Executes Using dist-files Artifact.
-    secrets:
-      some-secret: ${{ secrets.some-secret}}
+  print-deploy-result:
+   needs: deploy
+   runs-on: ubuntu-latest
+   steps:
+     - name: print deploy output
+       run: echo "${{  needs.deploy.outputs.result}}
+   
+  
+   
+    #secrets:
+      #some-secret: ${{ secrets.some-secret}}
   report:
     needs: [lint, deploy]
     if: failure()
