@@ -17,11 +17,19 @@ on:
        type: string     # Expected type of the input value.
        #Specifies the data type expected for this input.
       # In this case, it should be a string (text value).
-   outputs:
+   outputs:                     
     result: 
       description: the result of the deployment operation.
       value: ${{ jobs.deploy.outputs.outcome }}
-   
+   #outputs:
+#Declares outputs that can be shared from this reusable workflow to the caller.
+#result:
+#The name of the output variable exposed to the workflow that calls this one.
+#description:#Optional metadata to describe what this output means.
+#value:
+#What is actually returned.
+#In this case:→ jobs.deploy.outputs.outcome
+#refers to an output named outcome from the deploy job inside this same workflow.
    # secrets:                  
    # some-secret: 
      # required: false 
@@ -44,5 +52,12 @@ jobs:
       - name: Output info
         run: echo "Deploying"
       - name: set result output
-        id : set-result
-        run: echo " ::set-output=step-result::success"
+        id: set-result
+        run: echo "step-result=success" >> $GITHUB_OUTPUT
+        #name: set result output: This is just a name for the step to help you identify it within the workflow.
+#id: set-result: The id helps reference this step's output in later steps. In this case, we’re referencing the output of the set-result step in the next steps using steps.set-result.outputs.step-result.
+#run: echo "step-result=success" >> $GITHUB_OUTPUT: This is the key part:
+#echo "step-result=success": This part defines the output named step-result with the value success.
+#>> $GITHUB_OUTPUT: This writes the output to the $GITHUB_OUTPUT file, which GitHub Actions uses to record the outputs of the current step. The >> means that it appends the output to the file.
+       
+      
