@@ -1,4 +1,4 @@
-name: upload artifacts and use them in other step
+name: upload artifacts and use them in other job
 on: [push]
 jobs:
  test:
