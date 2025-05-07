@@ -44,8 +44,8 @@ jobs:
    - name: build code
      id: build-code
      run: npm run build
-   - name: upload test artifact
-     if: failure() && steps.test-code.outcome=='failure'
+   - name: upload build artifact
+    # if: failure() && steps.build-code.outcome =='failure'
      uses: actions/upload-artifact@v4
      with: 
        name: build-report
