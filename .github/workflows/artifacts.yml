@@ -6,7 +6,7 @@ jobs:
   continue-on-error: true
   steps:
    - name: checkout code
-     uses: actions/checkout@v4
+     uses: actions/checkout@v3
    - name: cache dependencies
      id: cache
      uses: actions/cache@v4
@@ -21,7 +21,7 @@ jobs:
      run: npm run test
    - name: upload test artifact
      if: failure() && steps.test-code.outcome=='failure'
-     uses: actions/upload-artifact@v4
+     uses: actions/upload-artifact@v3
      with: 
        name: test-report
        path: test
@@ -32,10 +32,10 @@ jobs:
   continue-on-error: true
   steps:
    - name: checkout code
-     uses: actions/checkout@v4
+     uses: actions/checkout@v3
    - name: cache dependencies
      id: cache
-     uses: actions/cache@v4
+     uses: actions/cache@v3
      with:
       path: ~/.npm
       key: node-modules-${{ hashFiles('**/package-lock.json') }}
