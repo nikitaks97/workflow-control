@@ -21,7 +21,7 @@ jobs:
      run: npm run test
    - name: upload test artifact
      #if: failure() && steps.test-code.outcome=='failure'
-     if: always
+     if: always()
      uses: actions/upload-artifact@v4
      with: 
        name: test-report
@@ -49,7 +49,7 @@ jobs:
      run: npm run build
    - name: upload build artifact
      #if: failure() && steps.build-code.outcome =='failure'
-     if: always
+     if: always()
      uses: actions/upload-artifact@v3
      with: 
        name: build-report
